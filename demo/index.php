@@ -9,9 +9,10 @@ if (php_sapi_name() === 'cli-server' && is_file($filename)) {
     // Include the Router class
     // @note: it's recommended to just use the composer autoloader when working with other packages too
     require_once __DIR__ . '/../src/Bramus/Router/Router.php';
+    require_once __DIR__ . '/../src/Bramus/Router/BlackRouter.php';
 
     // Create a Router
-    $router = new \Bramus\Router\Router();
+    $router = new \Bramus\Router\BlackRouter();
 
     // Custom 404 Handler
     $router->set404(function () {
@@ -25,8 +26,9 @@ if (php_sapi_name() === 'cli-server' && is_file($filename)) {
     });
 
     // Static route: / (homepage)
-    $router->get('/', function () {
+    $router->get('/', function () use ($router) {
         echo '<h1>bramus/router</h1><p>Try these routes:<p><ul><li>/hello/<em>name</em></li><li>/blog</li><li>/blog/<em>year</em></li><li>/blog/<em>year</em>/<em>month</em></li><li>/blog/<em>year</em>/<em>month</em>/<em>day</em></li><li>/movies</li><li>/movies/<em>id</em></li></ul>';
+        echo $router->getTypeReq();
     });
 
     // Static route: /hello
